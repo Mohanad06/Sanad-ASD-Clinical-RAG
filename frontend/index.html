@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinical ASD RAG - Decision Support</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Next:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons CDN for clean vector icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="h-screen overflow-hidden flex">
+
+    <!-- Mobile Top App Bar -->
+    <header class="mobile-header">
+        <div class="flex items-center gap-2">
+            <button id="mobile-menu-toggle" aria-label="Toggle Navigation Menu">
+                <i data-lucide="menu" class="text-primary"></i>
+            </button>
+            <!-- <span class="logo-title-mobile text-primary">Clinical ASD RAG</span> -->
+        </div>
+        <div class="flex items-center gap-4">
+            <i data-lucide="settings" class="text-muted-foreground"></i>
+        </div>
+    </header>
+
+    <!-- Sidebar Navigation (Desktop/Drawer on Mobile) -->
+    <nav id="sidebar" class="sidebar">
+        <!-- Fixed Logo / Branding Area -->
+        <div class="sidebar-brand-section">
+            <button id="sidebar-logo-button" class="sidebar-logo-button" aria-label="Clinical ASD RAG logo"
+                tabindex="-1">
+                <img src="project-logo.png" alt="Clinical ASD RAG logo" class="sidebar-brand-logo">
+                <i data-lucide="panel-left-open" class="logo-toggle-icon icon-md"></i>
+            </button>
+            <!-- Sidebar Toggle Button (Desktop only) -->
+            <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Collapse sidebar" title="Collapse sidebar">
+                <i data-lucide="panel-left-close"></i>
+            </button>
+        </div>
+
+        <hr class="sidebar-divider">
+
+        <div class="sidebar-user-section">
+            <div class="sidebar-user-info">
+                <h2 class="sidebar-user-title">Autism Clinical Assistant</h2>
+                <p class="sidebar-user-subtitle">Diagnostic Support</p>
+            </div>
+        </div>
+
+        <button id="new-chat-btn" class="new-chat-btn" aria-label="New Chat" title="New Chat">
+            <i data-lucide="square-pen" class="icon-sm"></i>
+            <span class="new-chat-text">New Chat</span>
+        </button>
+
+        <!-- Chronological Chat Sessions -->
+        <div class="sidebar-history-container">
+            <div class="history-group">
+                <h3 class="history-header">Today</h3>
+                <ul id="history-today" class="history-list">
+                    <!-- Loaded dynamically via script.js -->
+                </ul>
+            </div>
+            <div class="history-group">
+                <h3 class="history-header">Previous</h3>
+                <ul id="history-previous" class="history-list">
+                    <!-- Loaded dynamically via script.js -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- Global Nav Links -->
+        <div class="sidebar-footer">
+            <a href="#" class="footer-link coming-soon" title="Diagnostic Criteria"><i data-lucide="file-check"
+                    class="icon-sm"></i> <span class="footer-link-text">Diagnostic Criteria</span> <span
+                    class="coming-soon-badge">Soon</span></a>
+            <a href="#" class="footer-link coming-soon" title="Treatment Guidelines"><i data-lucide="activity"
+                    class="icon-sm"></i> <span class="footer-link-text">Treatment Guidelines</span> <span
+                    class="coming-soon-badge">Soon</span></a>
+            <a href="#" class="footer-link coming-soon" title="Safety Protocols"><i data-lucide="shield-alert"
+                    class="icon-sm"></i> <span class="footer-link-text">Safety Protocols</span> <span
+                    class="coming-soon-badge">Soon</span></a>
+        </div>
+    </nav>
+
+    <!-- Overlay backdrop for mobile navigation sidebar drawer -->
+    <div id="sidebar-overlay" class="sidebar-overlay hidden"></div>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Desktop Header Bar -->
+        <!-- <header class="desktop-header"> -->
+        <!-- <div class="header-left">
+                <h1 class="header-title">Clinical ASD RAG</h1>
+                <span class="status-pill text-emerald">
+                    <i data-lucide="shield-check" class="icon-xs"></i>
+                    Verified Evidence
+                </span>
+            </div> -->
+        <!-- <div class="header-right"> -->
+        <!-- <nav class="header-nav">
+                    <a href="#" class="header-nav-link active">Platform</a>
+                    <a href="#" class="header-nav-link coming-soon">Workspace <span
+                            class="coming-soon-badge-sm">Soon</span></a>
+                </nav> -->
+        <!-- <div class="header-meta"> -->
+        <!-- <span class="meta-item"><i data-lucide="lock" class="icon-xs"></i> Encrypted Session</span> -->
+        <!-- <button class="settings-btn"><i data-lucide="settings" class="icon-sm"></i></button> -->
+        <!-- </div> -->
+        <!-- </div> -->
+        <!-- </header> -->
+
+        <!-- Chat Container -->
+        <div class="chat-container">
+            <div id="chat-messages" class="chat-messages">
+                <!-- Welcome/Empty state or message history loaded here dynamically -->
+            </div>
+        </div>
+
+        <!-- Input Area (Pinned Bottom) -->
+        <div class="input-container">
+            <div id="attachment-preview" class="attachment-preview hidden"></div>
+            <div class="input-wrapper">
+                <button id="attach-btn" class="attach-btn" aria-label="Attach document" title="Attach document">
+                    <i data-lucide="paperclip" class="icon-sm"></i>
+                </button>
+                <input type="file" id="file-input" class="hidden"
+                    accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                <textarea id="query" class="chat-textarea"
+                    placeholder="Ask a question about Autism Spectrum Disorder..." rows="1"></textarea>
+                <button id="submit-btn" class="send-btn" aria-label="Send clinical query">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        id="send-icon" class="lucide lucide-send">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                    <div id="spinner" class="spinner hidden"></div>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

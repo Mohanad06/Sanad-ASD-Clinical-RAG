@@ -1,0 +1,6 @@
+[tool.watchfiles]
+ignore_paths = [
+    "backend/document_upload/uploads",
+    "backend/document_upload/index",
+    "backend/document_upload/registry.json"
+]
