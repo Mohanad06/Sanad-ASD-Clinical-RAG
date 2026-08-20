@@ -125,4 +125,5 @@ def get_evaluation_summary():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("backend.main:app", host=config.HOST, port=config.PORT, reload=True)
+    is_dev = os.environ.get("ENV", "production").lower() == "development"
+    uvicorn.run("backend.main:app", host=config.HOST, port=config.PORT, reload=is_dev)
