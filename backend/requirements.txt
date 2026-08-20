@@ -1,10 +1,10 @@
 fastapi==0.111.0
 uvicorn==0.30.1
 pydantic==2.7.4
-langchain==0.2.5
-langchain-community==0.2.5
-langchain-chroma==1.1.0
-langchain-openai==0.1.8
+langchain
+langchain-community
+langchain-chroma
+langchain-openai
 fastembed==0.3.1
 chromadb
 pypdf==4.2.0
